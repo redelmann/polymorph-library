@@ -24,7 +24,7 @@ public class Generator {
      * @param numberOfValues The number of values to choose from. Must be strictly positive.
      * @return an integer between 0 inclusive and {@code numberOfValues} exclusive.
      */
-    private int nextInt(int numberOfValues) {
+    public int nextInt(int numberOfValues) {
         return nextBigInteger(BigInteger.valueOf(numberOfValues)).intValue();
     }
 
@@ -33,7 +33,7 @@ public class Generator {
      * @param numberOfValues The number of values to choose from. Must be strictly positive.
      * @return an integer between 0 inclusive and {@code numberOfValues} exclusive.
      */
-    private BigInteger nextBigInteger(BigInteger numberOfValues) {
+    public BigInteger nextBigInteger(BigInteger numberOfValues) {
         assert(numberOfValues.compareTo(BigInteger.ZERO) > 0);
 
         BigInteger[] divRem = _value.divideAndRemainder(numberOfValues);
