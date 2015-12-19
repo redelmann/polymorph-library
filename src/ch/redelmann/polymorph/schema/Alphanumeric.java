@@ -5,7 +5,7 @@ import ch.redelmann.polymorph.Generator;
 /** Password schema that generate passwords consisting of
  *  a mix of upper and lower case letters, and digits.
  *
- *  The size of the generated passwords is between 3 and 20 characters long.
+ *  The size of the generated passwords is between 4 and 20 characters long.
  *  By default, the passwords generated are 18 characters long.
  */
 public class Alphanumeric extends Schema {
@@ -17,15 +17,17 @@ public class Alphanumeric extends Schema {
 
     /** Builds an alphanumeric schema with a specified password size.
      *
-     * @param size The size of the generated passwords, between 3 and 20 inclusive.
+     * @param size The size of the generated passwords, between 4 and 20 inclusive.
      */
     public Alphanumeric(int size) {
         super(size);
+
+        assert(size >= 4 && size <= 20);
     }
 
     @Override
     protected String generate(Generator gen) {
-        int minSize = 3;
+        int minSize = 4;
 
         int size = Math.max(minSize, getSize());
         int min = Math.max(1, size / 8);
