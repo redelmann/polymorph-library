@@ -8,10 +8,13 @@ public class Permutation {
     /** Computes the kth permutation of a {@code string}.
      *
      * @param string The initial string.
-     * @param k      The permutation number.
+     * @param k      The permutation number. Must be non-negative.
      * @return the kth permutation of the {@code string}.
      */
     public static String getKthPermutation(String string, BigInteger k) {
+
+        // Only works for positive integers.
+        assert(k.compareTo(BigInteger.ZERO) >= 0);
 
         // Computes the radix representation of k.
         int size = string.length();
