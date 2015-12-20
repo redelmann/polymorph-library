@@ -10,8 +10,8 @@ import static org.junit.Assert.*;
 public class PolymorphTest {
 
     @Test
-    public void safeDefaultSizePasswords() {
-        Schema safe = new Safe();
+    public void safeLargeSizePasswords() {
+        Schema safe = new Safe(18);
 
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
@@ -21,7 +21,7 @@ public class PolymorphTest {
     }
 
     @Test
-    public void safeCustomSizePasswords() {
+    public void safeSmallSizePasswords() {
         Schema safe = new Safe(8);
 
         String password = "pony1234";
@@ -32,8 +32,8 @@ public class PolymorphTest {
     }
 
     @Test
-    public void alphaDefaultSizePasswords() {
-        Schema alpha = new Alphanumeric();
+    public void alphaLargeSizePasswords() {
+        Schema alpha = new Alphanumeric(18);
 
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
@@ -43,7 +43,7 @@ public class PolymorphTest {
     }
 
     @Test
-    public void alphaCustomSizePasswords() {
+    public void alphaSmallSizePasswords() {
         Schema alpha = new Alphanumeric(4);
 
         String password = "pony1234";
