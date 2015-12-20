@@ -10,8 +10,8 @@ public class Polymorph {
 
     // SCrypt parameters.
     private final static int N = 16384;    // CPU cost parameter. Has to be a power of 2.
-    private final static int R = 8;        // Memory cost parameter.
-    private final static int P = 50;       // Parallelization parameter.
+    private final static int R = 2;        // Memory cost parameter.
+    private final static int P = 1;        // Parallelization parameter.
     private final static int LENGTH = 64;  // Intended hash size.
 
     /**
