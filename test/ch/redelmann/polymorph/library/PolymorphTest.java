@@ -16,8 +16,8 @@ public class PolymorphTest {
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
 
-        assertEquals(Polymorph.derive(safe, "github", password, code), "k2'8n?QXwmptbJ7D44");
-        assertEquals(Polymorph.derive(safe, "facebook", password, code), "{g6e2hsKjh#Ra*\\ks(");
+        assertEquals(Polymorph.derive(safe, "github", password, code), "5pZYE8$jY5nY]j}3|#");
+        assertEquals(Polymorph.derive(safe, "facebook", password, code), "l9_75Uc*fiW.Sfdo0!");
     }
 
     @Test
@@ -27,8 +27,8 @@ public class PolymorphTest {
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
 
-        assertEquals(Polymorph.derive(safe, "github", password, code), "a,:6ss7Z");
-        assertEquals(Polymorph.derive(safe, "facebook", password, code), "Mnae3r&g");
+        assertEquals(Polymorph.derive(safe, "github", password, code), "Ri6z5c]N");
+        assertEquals(Polymorph.derive(safe, "facebook", password, code), "Kh0Zp~te");
     }
 
     @Test
@@ -38,8 +38,8 @@ public class PolymorphTest {
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
 
-        assertEquals(Polymorph.derive(alpha, "github", password, code), "il8cw9gtNQMKo2d9h9");
-        assertEquals(Polymorph.derive(alpha, "facebook", password, code), "wcyfzsaa0gndb5vQpT");
+        assertEquals(Polymorph.derive(alpha, "github", password, code), "ZVeiS4aVernaTqf343");
+        assertEquals(Polymorph.derive(alpha, "facebook", password, code), "2lFatbXftwy0a09pjM");
     }
 
     @Test
@@ -49,7 +49,7 @@ public class PolymorphTest {
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
 
-        assertEquals(Polymorph.derive(alpha, "github", password, code), "Y5lv");
-        assertEquals(Polymorph.derive(alpha, "facebook", password, code), "7pSa");
+        assertEquals(Polymorph.derive(alpha, "github", password, code), "oJk9");
+        assertEquals(Polymorph.derive(alpha, "facebook", password, code), "T7qi");
     }
 }
