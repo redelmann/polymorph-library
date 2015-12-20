@@ -1,4 +1,4 @@
-package ch.redelmann.polymorph;
+package ch.redelmann.polymorph.library;
 
 import java.math.BigInteger;
 

@@ -1,8 +1,8 @@
-package ch.redelmann.polymorph;
+package ch.redelmann.polymorph.library;
 
-import ch.redelmann.polymorph.schema.Alphanumeric;
-import ch.redelmann.polymorph.schema.Safe;
-import ch.redelmann.polymorph.schema.Schema;
+import ch.redelmann.polymorph.library.schema.Safe;
+import ch.redelmann.polymorph.library.schema.Schema;
+import ch.redelmann.polymorph.library.schema.Alphanumeric;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

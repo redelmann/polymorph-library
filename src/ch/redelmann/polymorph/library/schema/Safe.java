@@ -1,25 +1,25 @@
-package ch.redelmann.polymorph.schema;
+package ch.redelmann.polymorph.library.schema;
 
-import ch.redelmann.polymorph.Generator;
+import ch.redelmann.polymorph.library.Generator;
 
 /** Password schema that generate passwords consisting of
- *  a mix of upper and lower case letters, and digits.
+ *  a mix of upper and lower case letters, digits and special characters.
  *
  *  The size of the generated passwords is between 4 and 20 characters long.
  *  By default, the passwords generated are 18 characters long.
  */
-public class Alphanumeric extends Schema {
+public class Safe extends Schema {
 
-    /** Builds an alphanumeric schema with a default password size of 18. */
-    public Alphanumeric() {
-        super(18);
+    /** Builds a safe schema with a default size of 18. */
+    public Safe() {
+        this(18);
     }
 
-    /** Builds an alphanumeric schema with a specified password size.
+    /** Builds a safe schema with specified password size.
      *
      * @param size The size of the generated passwords, between 4 and 20 inclusive.
      */
-    public Alphanumeric(int size) {
+    public Safe(int size) {
         super(size);
 
         assert(size >= 4 && size <= 20);
@@ -35,8 +35,9 @@ public class Alphanumeric extends Schema {
 
         int nUpper = gen.nextInt(min, max);
         int nDigit = gen.nextInt(min, max);
+        int nSpecial = gen.nextInt(min, max);
 
-        int nLower = size - nUpper - nDigit;
+        int nLower = size - nUpper - nSpecial - nDigit;
 
         StringBuilder output = new StringBuilder(size);
 
@@ -45,6 +46,9 @@ public class Alphanumeric extends Schema {
         }
         for (int i = 0; i < nDigit; i++) {
             output.append(gen.nextDigit());
+        }
+        for (int i = 0; i < nSpecial; i++) {
+            output.append(gen.nextSpecialChar());
         }
         for (int i = 0; i < nLower; i++) {
             output.append(gen.nextLowerLetter());

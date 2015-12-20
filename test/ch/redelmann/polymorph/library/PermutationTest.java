@@ -1,4 +1,4 @@
-package ch.redelmann.polymorph;
+package ch.redelmann.polymorph.library;
 
 import org.junit.Test;
 

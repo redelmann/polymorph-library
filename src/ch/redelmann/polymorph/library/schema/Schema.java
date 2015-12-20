@@ -1,6 +1,6 @@
-package ch.redelmann.polymorph.schema;
+package ch.redelmann.polymorph.library.schema;
 
-import ch.redelmann.polymorph.Generator;
+import ch.redelmann.polymorph.library.Generator;
 
 import java.math.BigInteger;
 

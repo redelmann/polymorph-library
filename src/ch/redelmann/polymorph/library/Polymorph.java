@@ -1,6 +1,6 @@
-package ch.redelmann.polymorph;
+package ch.redelmann.polymorph.library;
 
-import ch.redelmann.polymorph.schema.Schema;
+import ch.redelmann.polymorph.library.schema.Schema;
 import com.lambdaworks.crypto.SCrypt;
 
 import java.math.BigInteger;
