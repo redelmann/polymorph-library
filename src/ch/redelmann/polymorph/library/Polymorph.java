@@ -8,30 +8,34 @@ import java.math.BigInteger;
 /** Password generator using SCrypt. */
 public class Polymorph {
 
-    // SCrypt parameters.
-    private final static int N = 16384;    // CPU cost parameter. Has to be a power of 2.
-    private final static int R = 2;        // Memory cost parameter.
-    private final static int P = 1;        // Parallelization parameter.
-    private final static int LENGTH = 64;  // Intended hash size.
+    // Intended hash size.
+    private final static int LENGTH = 64;
 
     /**
-     * Derives a cryptographic hash using SCrypt.
-     * This function is compute intensive.
+     * Derives a cryptographic hash using {@code SCrypt}.
+     * This function can be compute intensive.
      *
-     * @param domain   The domain for which the password is used.
-     * @param password The master password from which to derive other passwords.
-     * @param salt     Extra salt, to prevent rainbow table attacks.
+     * @param domain        The domain for which the password is used.
+     * @param password      The master password from which to derive other passwords.
+     * @param configuration Configuration for SCrypt.
      * @return a cryptographically secure hash, in integer form.
      */
-    private static BigInteger hash(byte[] domain, byte[] password, byte[] salt) {
+    private static BigInteger hash(byte[] domain, byte[] password, Configuration configuration) {
         try {
+            byte[] salt = configuration.code.getBytes();
             // Concatenating the password and salt.
             byte[] passwordCode = new byte[password.length + salt.length];
             System.arraycopy(password, 0, passwordCode, 0, password.length);
             System.arraycopy(salt, 0, passwordCode, password.length, salt.length);
 
             // Using SCrypt to get a byte array hash.
-            byte[] encrypted = SCrypt.scrypt(passwordCode, domain, N, R, P, LENGTH);
+            byte[] encrypted = SCrypt.scrypt(
+                    passwordCode,
+                    domain,
+                    (1 << configuration.logN),
+                    configuration.r,
+                    configuration.p,
+                    LENGTH);
 
             // Converting the byte array to a large integer.
             BigInteger result = BigInteger.ZERO;
@@ -49,16 +53,16 @@ public class Polymorph {
     }
 
     /**
-     * Derives a cryptographic hash using SCrypt.
-     * This function is compute intensive.
+     * Computes a password following the given {@code schema}.
+     * This function makes use of {@code SCrypt} and thus can be very compute intensive.
      *
-     * @param schema   The schema to use for the password.
-     * @param domain   The domain for which the password is used.
-     * @param password The master password from which to derive other passwords.
-     * @param salt     Extra salt, to prevent rainbow table attacks.
-     * @return a secure password following the schema.
+     * @param schema        The schema used to derive the password.
+     * @param domain        The domain for which the derived password is used.
+     * @param password      The master password.
+     * @param configuration Configuration parameters for SCrypt.
+     * @return a password following the given {@code schema}.
      */
-    public static String derive(Schema schema, String domain, String password, String salt) {
-        return schema.generate(hash(domain.getBytes(), password.getBytes(), salt.getBytes()));
+    public static String derive(Schema schema, String domain, String password, Configuration configuration) {
+        return schema.generate(hash(domain.getBytes(), password.getBytes(), configuration));
     }
 }

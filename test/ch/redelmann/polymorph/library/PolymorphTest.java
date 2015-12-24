@@ -9,6 +9,14 @@ import static org.junit.Assert.*;
 
 public class PolymorphTest {
 
+    private static Configuration getDefaultConfigWithCode(String code) {
+        return new Configuration(
+                Configuration.DEFAULT_LOG_N,
+                Configuration.DEFAULT_R,
+                Configuration.DEFAULT_P,
+                code);
+    }
+
     @Test
     public void safeLargeSizePasswords() {
         Schema safe = new Safe(18);
@@ -16,8 +24,12 @@ public class PolymorphTest {
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
 
-        assertEquals(Polymorph.derive(safe, "github", password, code), "5pZYE8$jY5nY]j}3|#");
-        assertEquals(Polymorph.derive(safe, "facebook", password, code), "l9_75Uc*fiW.Sfdo0!");
+        assertEquals(
+                Polymorph.derive(safe, "github", password, getDefaultConfigWithCode(code)),
+                "5pZYE8$jY5nY]j}3|#");
+        assertEquals(
+                Polymorph.derive(safe, "facebook", password, getDefaultConfigWithCode(code)),
+                "l9_75Uc*fiW.Sfdo0!");
     }
 
     @Test
@@ -27,8 +39,12 @@ public class PolymorphTest {
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
 
-        assertEquals(Polymorph.derive(safe, "github", password, code), "Ri6z5c]N");
-        assertEquals(Polymorph.derive(safe, "facebook", password, code), "Kh0Zp~te");
+        assertEquals(
+                Polymorph.derive(safe, "github", password, getDefaultConfigWithCode(code)),
+                "Ri6z5c]N");
+        assertEquals(
+                Polymorph.derive(safe, "facebook", password, getDefaultConfigWithCode(code)),
+                "Kh0Zp~te");
     }
 
     @Test
@@ -38,8 +54,12 @@ public class PolymorphTest {
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
 
-        assertEquals(Polymorph.derive(alpha, "github", password, code), "ZVeiS4aVernaTqf343");
-        assertEquals(Polymorph.derive(alpha, "facebook", password, code), "2lFatbXftwy0a09pjM");
+        assertEquals(
+                Polymorph.derive(alpha, "github", password, getDefaultConfigWithCode(code)),
+                "ZVeiS4aVernaTqf343");
+        assertEquals(
+                Polymorph.derive(alpha, "facebook", password, getDefaultConfigWithCode(code)),
+                "2lFatbXftwy0a09pjM");
     }
 
     @Test
@@ -49,7 +69,11 @@ public class PolymorphTest {
         String password = "pony1234";
         String code = "AGDE2-DGXA4-33DLQ-WEDAP-GYPQ9";
 
-        assertEquals(Polymorph.derive(alpha, "github", password, code), "oJk9");
-        assertEquals(Polymorph.derive(alpha, "facebook", password, code), "T7qi");
+        assertEquals(
+                Polymorph.derive(alpha, "github", password, getDefaultConfigWithCode(code)),
+                "oJk9");
+        assertEquals(
+                Polymorph.derive(alpha, "facebook", password, getDefaultConfigWithCode(code)),
+                "T7qi");
     }
 }
