@@ -30,4 +30,27 @@ public class Configuration {
         this.p = p;
         this.code = code;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Configuration that = (Configuration) o;
+
+        if (logN != that.logN) return false;
+        if (r != that.r) return false;
+        if (p != that.p) return false;
+        return code.equals(that.code);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = logN;
+        result = 31 * result + r;
+        result = 31 * result + p;
+        result = 31 * result + code.hashCode();
+        return result;
+    }
 }

@@ -10,9 +10,13 @@ import ch.redelmann.polymorph.library.Generator;
  */
 public class Safe extends Schema {
 
+    public static final String NAME = "safe";
+
+    public static final int DEFAULT_SIZE = 18;
+
     /** Builds a safe schema with a default size of 18. */
     public Safe() {
-        this(18);
+        this(DEFAULT_SIZE);
     }
 
     /** Builds a safe schema with specified password size.
@@ -23,6 +27,11 @@ public class Safe extends Schema {
         super(size);
 
         assert(size >= 4);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
     @Override

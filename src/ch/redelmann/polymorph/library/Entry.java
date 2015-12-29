@@ -20,4 +20,19 @@ public class Entry {
         this.domain = domain;
         this.schema = schema;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Entry that = (Entry) o;
+
+        return this.domain.equals(that.domain) && this.schema.equals(that.schema);
+    }
+
+    @Override
+    public int hashCode() {
+        return domain.hashCode() + 31 * schema.hashCode();
+    }
 }

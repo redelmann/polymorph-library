@@ -10,9 +10,13 @@ import ch.redelmann.polymorph.library.Generator;
  */
 public class Alphanumeric extends Schema {
 
+    public static final String NAME = "alpha";
+
+    public static final int DEFAULT_SIZE = 18;
+
     /** Builds an alphanumeric schema with a default password size of 18. */
     public Alphanumeric() {
-        super(18);
+        super(DEFAULT_SIZE);
     }
 
     /** Builds an alphanumeric schema with a specified password size.
@@ -23,6 +27,11 @@ public class Alphanumeric extends Schema {
         super(size);
 
         assert(size >= 3);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
     @Override

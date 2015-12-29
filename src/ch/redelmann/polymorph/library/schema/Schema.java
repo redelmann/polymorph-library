@@ -24,8 +24,25 @@ public abstract class Schema {
      *
      * @return the intended size of passwords.
      */
-    protected final int getSize() {
+    public final int getSize() {
         return _size;
+    }
+
+    public abstract String getName();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Schema that = (Schema) o;
+
+        return this.getName().equals(that.getName()) && this.getSize() == (that.getSize());
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode() + 31 * getSize();
     }
 
     /**
