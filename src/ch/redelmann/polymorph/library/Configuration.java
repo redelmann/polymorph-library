@@ -1,5 +1,8 @@
 package ch.redelmann.polymorph.library;
 
+import org.json.JSONObject;
+import org.json.JSONWriter;
+
 /** Configuration parameters for the hash function. */
 public class Configuration {
 
@@ -29,6 +32,38 @@ public class Configuration {
         this.r = r;
         this.p = p;
         this.code = code;
+    }
+
+    // JSON parameter names.
+    private static String KEY_LOG_N = "log_n";
+    private static String KEY_R = "r";
+    private static String KEY_P = "p";
+    private static String KEY_CODE = "code";
+
+    /** Gets a {@code Configuration} from its JSON representation.
+     *
+     * @param root The JSON object representing the configuration.
+     * @return the configuration represented.
+     */
+    public static Configuration fromJSON(JSONObject root) {
+        int logN = root.optInt(KEY_LOG_N, DEFAULT_LOG_N);
+        int r = root.optInt(KEY_R, DEFAULT_R);
+        int p = root.optInt(KEY_P, DEFAULT_P);
+        String code = root.optString(KEY_CODE, DEFAULT_CODE);
+
+        return new Configuration(logN, r, p, code);
+    }
+
+    /** Gets the JSON representation of this {@code Configuration}.
+     *
+     * @return the JSON representation of this {@code Configuration}.
+     */
+    public JSONObject toJSON() {
+        return new JSONObject()
+                .put(KEY_LOG_N, logN)
+                .put(KEY_R, r)
+                .put(KEY_P, p)
+                .put(KEY_CODE, code);
     }
 
     @Override
