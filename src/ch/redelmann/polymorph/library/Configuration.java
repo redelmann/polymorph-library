@@ -1,7 +1,6 @@
 package ch.redelmann.polymorph.library;
 
 import org.json.JSONObject;
-import org.json.JSONWriter;
 
 /** Configuration parameters for the hash function. */
 public class Configuration {

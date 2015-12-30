@@ -50,11 +50,18 @@ public class History {
      *
      * @param input The input stream, containing a JSON description of the {@code History}.
      * @return the {@code History} loaded from the stream.
-     * @throws JSONException if the stream does not contain a valid representation or throws an {@code IOException}.
+     * @throws JSONException if the stream does not contain a valid representation.
+     * @throws IOException if the stream produces an {@code IOException}.
      */
-    public static History loadFrom(InputStream input) throws JSONException {
+    public static History loadFrom(InputStream input) throws JSONException, IOException {
         ArrayList<Entry> entries = new ArrayList<>();
-        JSONArray array = new JSONArray(new JSONTokener(input));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+        StringBuilder builder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            builder.append(line);
+        }
+        JSONArray array = new JSONArray(new JSONTokener(builder.toString()));
         for (int i = 0; i < array.length(); i++) {
             JSONObject object = array.optJSONObject(i);
             if (object != null) {
@@ -72,12 +79,11 @@ public class History {
      */
     public void saveTo(OutputStream output) throws IOException {
         Writer writer = new OutputStreamWriter(output);
-        JSONWriter json = new JSONWriter(writer);
-        json.array();
+        JSONArray json = new JSONArray();
         for (Entry entry : _entries) {
-            json.value(entry.toJSON());
+            json.put(entry.toJSON());
         }
-        json.endArray();
+        writer.write(json.toString());
         writer.flush();
     }
 

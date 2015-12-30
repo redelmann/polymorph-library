@@ -70,20 +70,20 @@ public class HistoryTest {
     }
 
     @Test(expected = JSONException.class)
-    public void testIncompleteJSON() throws JSONException {
+    public void testIncompleteJSON() throws Exception {
         String json =  "[{\"schema\":\"alpha\",";
         ByteArrayInputStream input = new ByteArrayInputStream(json.getBytes());
         History.loadFrom(input);
     }
 
     @Test(expected = JSONException.class)
-    public void testRootObjectJSON() throws JSONException {
+    public void testRootObjectJSON() throws Exception {
         String json =  "{\"schema\":\"alpha\",\"domain\":\"facebook\",\"size\":12}";
         ByteArrayInputStream input = new ByteArrayInputStream(json.getBytes());
         History.loadFrom(input);
     }
 
-    @Test(expected = JSONException.class)
+    @Test(expected = IOException.class)
     public void testIOExceptionInInputStream() throws Exception {
         String json =
                 "[{\"schema\":\"alpha\",\"domain\":\"facebook\",\"size\":12},{\"schema\":\"safe\",\"domain\":\"github\",\"size\":18},{\"schema\":\"safe\",\"domain\":\"google\",\"size\":25}]";
