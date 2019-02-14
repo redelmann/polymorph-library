@@ -5,6 +5,8 @@ import ch.redelmann.polymorph.library.schema.Safe;
 import ch.redelmann.polymorph.library.schema.Schema;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 /** Contains a domain and the password schema used for that domain. */
 public class Entry {
 
@@ -14,25 +16,31 @@ public class Entry {
     /** The schema used to generate passwords for that domain. */
     public final Schema schema;
 
+    /** The version of the password. */
+    public final int version;
+
     /** Builds an {@code Entry}.
      *
      * @param domain The domain on which the password is used.
      * @param schema The schema of the password.
      */
-    public Entry(String domain, Schema schema) {
+    public Entry(String domain, Schema schema, int version) {
         this.domain = domain;
         this.schema = schema;
+        this.version = version;
     }
 
     private static final String KEY_DOMAIN = "domain";
     private static final String KEY_SIZE = "size";
     private static final String KEY_SCHEMA = "schema";
+    private static final String KEY_VERSION = "version";
 
     public static Entry fromJSON(JSONObject root) {
         assert(root.has(KEY_DOMAIN));
 
         String domain = root.getString(KEY_DOMAIN);
         String schemaName = root.optString(KEY_SCHEMA, Safe.NAME);
+        int version = root.optInt(KEY_VERSION, 0);
 
         Schema schema;
         switch (schemaName) {
@@ -50,28 +58,29 @@ public class Entry {
                 throw new IllegalArgumentException("Unknown schema name " + schemaName);
         }
 
-        return new Entry(domain, schema);
+        return new Entry(domain, schema, version);
     }
 
     public JSONObject toJSON() {
         return new JSONObject()
                 .put(KEY_DOMAIN, domain)
                 .put(KEY_SIZE, schema.getSize())
-                .put(KEY_SCHEMA, schema.getName());
+                .put(KEY_SCHEMA, schema.getName())
+                .put(KEY_VERSION, version);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        Entry that = (Entry) o;
-
-        return this.domain.equals(that.domain) && this.schema.equals(that.schema);
+        Entry entry = (Entry) o;
+        return version == entry.version &&
+                domain.equals(entry.domain) &&
+                schema.equals(entry.schema);
     }
 
     @Override
     public int hashCode() {
-        return domain.hashCode() + 31 * schema.hashCode();
+        return Objects.hash(domain, schema, version);
     }
 }
