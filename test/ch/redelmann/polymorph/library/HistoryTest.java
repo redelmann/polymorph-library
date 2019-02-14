@@ -14,12 +14,12 @@ import static org.junit.Assert.*;
 public class HistoryTest {
 
     @Test
-    public void testGetAll() throws Exception {
-        Entry entry1 = new Entry("github", new Safe(18));
-        Entry entry2 = new Entry("google", new Safe(25));
-        Entry entry3 = new Entry("facebook", new Alphanumeric(12));
-        Entry entry4 = new Entry("google", new Safe(12));
-        Entry entry5 = new Entry("google", new Alphanumeric(17));
+    public void testGetAll() {
+        Entry entry1 = new Entry("github", new Safe(18), 0);
+        Entry entry2 = new Entry("google", new Safe(25), 0);
+        Entry entry3 = new Entry("facebook", new Alphanumeric(12), 1);
+        Entry entry4 = new Entry("google", new Safe(12), 3);
+        Entry entry5 = new Entry("google", new Alphanumeric(17), 1);
 
         ArrayList<Entry> entries = new ArrayList<>();
         entries.add(entry1);
@@ -42,9 +42,9 @@ public class HistoryTest {
 
     @Test
     public void testJSON() throws Exception {
-        Entry entry1 = new Entry("github", new Safe(18));
-        Entry entry2 = new Entry("google", new Safe(25));
-        Entry entry3 = new Entry("facebook", new Alphanumeric(12));
+        Entry entry1 = new Entry("github", new Safe(18), 0);
+        Entry entry2 = new Entry("google", new Safe(25), 0);
+        Entry entry3 = new Entry("facebook", new Alphanumeric(12), 0);
 
         List<Entry> entries = new ArrayList<>();
         entries.add(entry1);
@@ -53,8 +53,9 @@ public class HistoryTest {
 
         History history = new History(entries);
 
-        String json =
-                "[{\"schema\":\"alpha\",\"domain\":\"facebook\",\"size\":12},{\"schema\":\"safe\",\"domain\":\"github\",\"size\":18},{\"schema\":\"safe\",\"domain\":\"google\",\"size\":25}]";
+        String json = "[{\"schema\":\"alpha\",\"size\":12,\"domain\":\"facebook\",\"version\":0}," +
+                      "{\"schema\":\"safe\",\"size\":18,\"domain\":\"github\",\"version\":0}," +
+                      "{\"schema\":\"safe\",\"size\":25,\"domain\":\"google\",\"version\":0}]";
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         history.saveTo(output);
         assertEquals(json, output.toString());
@@ -85,17 +86,18 @@ public class HistoryTest {
 
     @Test(expected = IOException.class)
     public void testIOExceptionInInputStream() throws Exception {
-        String json =
-                "[{\"schema\":\"alpha\",\"domain\":\"facebook\",\"size\":12},{\"schema\":\"safe\",\"domain\":\"github\",\"size\":18},{\"schema\":\"safe\",\"domain\":\"google\",\"size\":25}]";
+        String json = "[{\"schema\":\"alpha\",\"size\":12,\"domain\":\"facebook\",\"version\":0}," +
+                "{\"schema\":\"safe\",\"size\":18,\"domain\":\"github\",\"version\":0}," +
+                "{\"schema\":\"safe\",\"size\":25,\"domain\":\"google\",\"version\":0}]";
         InputStream input = new IOExceptionInputStream(new ByteArrayInputStream(json.getBytes()), 10);
         History.loadFrom(input);
     }
 
     @Test
     public void testAddRemove() {
-        Entry entry1 = new Entry("github", new Safe(18));
-        Entry entry2 = new Entry("google", new Safe(25));
-        Entry entry3 = new Entry("facebook", new Alphanumeric(12));
+        Entry entry1 = new Entry("github", new Safe(18), 0);
+        Entry entry2 = new Entry("google", new Safe(25), 1);
+        Entry entry3 = new Entry("facebook", new Alphanumeric(12), 3);
 
 
         List<Entry> entries = new ArrayList<>();
@@ -164,8 +166,8 @@ class IOExceptionInputStream extends InputStream {
     }
 
     @Override
-    public synchronized void mark(int readlimit) {
-        _input.mark(readlimit);
+    public synchronized void mark(int read_limit) {
+        _input.mark(read_limit);
     }
 
     @Override
